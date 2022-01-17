@@ -48,7 +48,7 @@ func inputItems(){
     var type:String = ""
     var quantity:Int? = 1
     
-    func isItCommand(inputString:String)-> (Bool){  // return true if current string is not a command else returns false
+    func isItCommand(inputString:String)-> (Bool){  // return true if current string is a command else returns false
         if(inputString=="-name"){//
             return true
         }
@@ -69,7 +69,8 @@ func inputItems(){
     print("Enter the details of the items")
   
     if let inputLine = readLine(){
-        let inputParts = inputLine.components(separatedBy: " ")
+        let inputParts = inputLine.components(separatedBy: " ") // Breaking the line into string components
+        
         // considering the input of name differently because it can have more than one word.
         var indexOfName = 1
         if(inputParts[0] != "-name"){ // first command must be name
@@ -79,7 +80,7 @@ func inputItems(){
             
             // using while loop to extract name.
             
-            while( indexOfName < inputParts.endIndex && !isItCommand(inputString: inputParts[indexOfName]) && indexOfName<inputParts.endIndex){ // continue looping till we don't hit another command.
+            while( indexOfName < inputParts.endIndex && !isItCommand(inputString: inputParts[indexOfName])){ // continue looping till we don't hit another command.
                 name += inputParts[indexOfName] + " ";
                 indexOfName+=1;
             }
@@ -91,6 +92,9 @@ func inputItems(){
         for index in stride(from:inputParts.startIndex, to:(inputParts.endIndex),by: 1){
                 let currentString = inputParts[index];
                 switch currentString{
+                    
+                /* ternary operator is used to check if two commands are adjacent which is an incorrect input*/
+                    
                 case "-price":
                     price = isItCommand(inputString: inputParts[index+1]) ? -1 : Double(inputParts[index+1]) ?? 0.0
                 case "-quantity":
@@ -113,7 +117,7 @@ func inputItems(){
             print("Price Not Entered")
         }
         else{
-           // classifying objects on the basis of their type and appending into array of their type (list)
+           // classifying objects on the basis of their type and appending into an array of their type (list)
             if(type == "imported"){
                 let importedItem = ImportedItem(name, price , quantity ?? 1, type)
                 importedItemList.append(importedItem)
