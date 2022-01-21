@@ -4,7 +4,7 @@ import Foundation
 class ItemDetails{
      var name: String
      var price: Double
-     var quantity: Int
+    var quantity: Int? = 1
      var type: String
     
     init(_ name:String,_ price:Double,_ quantity:Int, _ type: String){
@@ -43,9 +43,9 @@ var importedItemList = [ImportedItem]()
 
 func inputItems(){
     
-    var price:Double = -1
-    var name:String = ""
-    var type:String = ""
+    var price:Double?
+    var name:String?
+    var type:String?
     var quantity:Int? = 1
     
     func isItCommand(inputString:String)-> (Bool){  // return true if current string is a command else returns false
@@ -77,11 +77,11 @@ func inputItems(){
             print("wrong input format")
         }
         else{
+            name=""
             
             // using while loop to extract name.
-            
             while( indexOfName < inputParts.endIndex && !isItCommand(inputString: inputParts[indexOfName])){ // continue looping till we don't hit another command.
-                name += inputParts[indexOfName] + " ";
+                name! += inputParts[indexOfName] + " ";
                 indexOfName+=1;
             }
             
@@ -107,27 +107,27 @@ func inputItems(){
             
         }
         // checking if all the inputs are valid.
-        if(name==""){
+        if(name==nil){
             print("Name not Entered")
         }
-        else if(type==""){
+        else if(type == nil){
             print("Type not Entered")
         }
-        else if(price == -1){
+        else if(price == nil){
             print("Price Not Entered")
         }
         else{
            // classifying objects on the basis of their type and appending into an array of their type (list)
             if(type == "imported"){
-                let importedItem = ImportedItem(name, price , quantity ?? 1, type)
+                let importedItem = ImportedItem(name!, price! , quantity ?? 1, type!)
                 importedItemList.append(importedItem)
             }
             else if(type == "raw"){
-                let rawItem = RawItem(name, price, quantity ?? 1, type)
+                let rawItem = RawItem(name!, price!, quantity ?? 1, type!)
                 rawItemList.append(rawItem)
             }
             else if(type == "manufactured"){
-                let manufacturedItem = ManufacturedItem(name, price, quantity ?? 1, type)
+                let manufacturedItem = ManufacturedItem(name!, price!, quantity ?? 1, type!)
                 manufacturedItemList.append(manufacturedItem)
             }
         }
