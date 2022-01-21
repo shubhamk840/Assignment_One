@@ -2,10 +2,10 @@
 import Foundation
 
 class ItemDetails{
-     var name: String
-     var price: Double
+    var name: String
+    var price: Double
     var quantity: Int? = 1
-     var type: String
+    var type: String
     
     init(_ name:String,_ price:Double,_ quantity:Int, _ type: String){
         self.name = name
@@ -18,9 +18,9 @@ class ItemDetails{
         print("Name of the item         \(name)")
         print("Type of the item         \(type)")
         print("Price of the item        \(price)")
-        print("Quantity of the item     \(quantity)")
+        print("Quantity of the item     \(quantity ?? 1)")
     }
-
+    
 }
 
 // a protocol declaration for tax calculations
@@ -28,7 +28,7 @@ protocol TaxCaculations{
     func calculateTax()->(Double)
     func printTax()
 }
- 
+
 
 
 
@@ -40,7 +40,6 @@ var manufacturedItemList = [ManufacturedItem]()
 var importedItemList = [ImportedItem]()
 
 
-
 func inputItems(){
     
     var price:Double?
@@ -49,16 +48,16 @@ func inputItems(){
     var quantity:Int? = 1
     
     func isItCommand(inputString:String)-> (Bool){  // return true if current string is a command else returns false
-        if(inputString=="-name"){//
+        if(inputString==Constants.commandName){//
             return true
         }
-        else if(inputString=="-price"){
+        else if(inputString==Constants.commandPrice){
             return true
         }
-        else if(inputString=="-quantity"){
+        else if(inputString==Constants.commandType){
             return true
         }
-        else if(inputString=="-type"){
+        else if(inputString==Constants.commandQuantity){
             return true
         }
         else{
@@ -67,13 +66,13 @@ func inputItems(){
     }
     
     print("Enter the details of the items")
-  
+    
     if let inputLine = readLine(){
         let inputParts = inputLine.components(separatedBy: " ") // Breaking the line into string components
         
         // considering the input of name differently because it can have more than one word.
         var indexOfName = 1
-        if(inputParts[0] != "-name"){ // first command must be name
+        if(inputParts[0] != Constants.commandName){ // first command must be name
             print("wrong input format")
         }
         else{
@@ -85,25 +84,25 @@ func inputItems(){
                 indexOfName+=1;
             }
             
-           
+            
         }
-            // using switch cases to input other details i.e., price, quantity and price.
+        // using switch cases to input other details i.e., price, quantity and price.
         // iterating over the whole input line and extracting information and type casting it .
         for index in stride(from:inputParts.startIndex, to:(inputParts.endIndex),by: 1){
-                let currentString = inputParts[index];
-                switch currentString{
-                    
+            let currentString = inputParts[index];
+            switch currentString{
+                
                 /* ternary operator is used to check if two commands are adjacent which is an incorrect input*/
-                    
-                case "-price":
-                    price = isItCommand(inputString: inputParts[index+1]) ? -1 : Double(inputParts[index+1]) ?? 0.0
-                case "-quantity":
-                    quantity = isItCommand(inputString:inputParts[index+1]) ? 1 : Int(inputParts[index+1])
-                case "-type":
-                    type = isItCommand(inputString:inputParts[index+1]) ? "" : inputParts[index+1]
-                default:
-                    continue
-                }
+                
+            case Constants.commandPrice:
+                price = isItCommand(inputString: inputParts[index+1]) ? -1 : Double(inputParts[index+1]) ?? 0.0
+            case Constants.commandQuantity:
+                quantity = isItCommand(inputString:inputParts[index+1]) ? 1 : Int(inputParts[index+1])
+            case Constants.commandType:
+                type = isItCommand(inputString:inputParts[index+1]) ? "" : inputParts[index+1]
+            default:
+                continue
+            }
             
         }
         // checking if all the inputs are valid.
@@ -117,18 +116,24 @@ func inputItems(){
             print("Price Not Entered")
         }
         else{
-           // classifying objects on the basis of their type and appending into an array of their type (list)
-            if(type == "imported"){
-                let importedItem = ImportedItem(name!, price! , quantity ?? 1, type!)
-                importedItemList.append(importedItem)
+            // classifying objects on the basis of their type and appending into an array of their type (list)
+            if(type == Constants.importedItem){
+                if let tempName = name, let tempPrice = price , let tempType = type{
+                    let importedItem = ImportedItem(tempName, tempPrice , quantity ?? 1, tempType)
+                    importedItemList.append(importedItem)
+                }
             }
-            else if(type == "raw"){
-                let rawItem = RawItem(name!, price!, quantity ?? 1, type!)
-                rawItemList.append(rawItem)
+            else if(type == Constants.rawItem){
+                if let tempName = name, let tempPrice = price , let tempType = type{
+                    let rawItem = ImportedItem(tempName, tempPrice , quantity ?? 1, tempType)
+                    importedItemList.append(rawItem)
+                }
             }
-            else if(type == "manufactured"){
-                let manufacturedItem = ManufacturedItem(name!, price!, quantity ?? 1, type!)
-                manufacturedItemList.append(manufacturedItem)
+            else if(type == Constants.manufacturedItem){
+                if let tempName = name, let tempPrice = price , let tempType = type{
+                    let manufacturedItem = ImportedItem(tempName, tempPrice , quantity ?? 1, tempType)
+                    importedItemList.append(manufacturedItem)
+                }
             }
         }
     }
@@ -154,10 +159,10 @@ func driver(){
             }
         }
         
-}
+    }
     
     
-// Finally Printing the information about each item
+    // Finally Printing the information about each item
     
     for elements in rawItemList{
         elements.printItemDetail()

@@ -8,8 +8,8 @@
 import Foundation
 
 class ManufacturedItem: ItemDetails, TaxCaculations{
-
-
+    
+    
     func calculateTax() -> (Double) {
         let tax = (12.5*price)/100 + 2*(price + (12.5*price)/100)/100;
         return tax
@@ -23,7 +23,7 @@ class ManufacturedItem: ItemDetails, TaxCaculations{
         print("Total cost       --      \(tax+price)")
         print("Quantity * Price --      \((tax+price)*Double(quantity ?? 1))")
         print("----------------------------------------------------")
-
+        
         
     }
 }

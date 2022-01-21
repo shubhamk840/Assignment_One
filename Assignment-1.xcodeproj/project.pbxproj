@@ -11,6 +11,7 @@
 		5158F1FE2795A5F300DE59BE /* ImportedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5158F1FD2795A5F300DE59BE /* ImportedItem.swift */; };
 		5158F2002795A6AC00DE59BE /* RawItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5158F1FF2795A6AC00DE59BE /* RawItem.swift */; };
 		5158F2022795A6D100DE59BE /* ManufacturedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5158F2012795A6D100DE59BE /* ManufacturedItem.swift */; };
+		51EA3867279A949B00F7D218 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EA3866279A949B00F7D218 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,7 @@
 		5158F2072795ABB800DE59BE /* Assignment-1_test.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Assignment-1_test.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		51C6A4342796922300B11E1D /* Unit_testing.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Unit_testing.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51EA3865279A806600F7D218 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		51EA3866279A949B00F7D218 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				5158F1FD2795A5F300DE59BE /* ImportedItem.swift */,
 				5158F1FF2795A6AC00DE59BE /* RawItem.swift */,
 				5158F2012795A6D100DE59BE /* ManufacturedItem.swift */,
+				51EA3866279A949B00F7D218 /* Constants.swift */,
 			);
 			path = "Assignment-1";
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51EA3867279A949B00F7D218 /* Constants.swift in Sources */,
 				5158F1FE2795A5F300DE59BE /* ImportedItem.swift in Sources */,
 				5158F2002795A6AC00DE59BE /* RawItem.swift in Sources */,
 				510332BC27943DA1006F3AB5 /* main.swift in Sources */,
