@@ -25,15 +25,12 @@ class ImportedItem: ItemDetails, TaxCaculations{
         return importDuty+surcharge
     }
     
-    func printTax(){
-        let tax = calculateTax();
-        
-        print("Tax on the item --       \(tax)")
-        print("Total cost       --      \(tax+price)")
-        print("Quantity * Price --      \((tax+price)*Double(quantity ?? 1))")
-        print("----------------------------------------------------")
-        
+    
+    
+    func populateTax(){
+        self.tax = calculateTax()
     }
+
     
     
     

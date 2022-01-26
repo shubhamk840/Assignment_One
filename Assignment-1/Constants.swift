@@ -8,6 +8,7 @@
 import Foundation
 
 // this contains all the string constants that are used all the over the program
+
 struct Constants{
     static let commandName = "-name"
     static let commandPrice = "-price"

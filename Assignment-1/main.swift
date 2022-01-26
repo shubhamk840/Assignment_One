@@ -1,32 +1,33 @@
 
 import Foundation
 
-class ItemDetails{
+class ItemDetails {
     var name: String
     var price: Double
     var quantity: Int? = 1
-    var type: String
+    var tax:Double = 0
     
-    init(_ name:String,_ price:Double,_ quantity:Int, _ type: String){
+    init(_ name:String,_ price:Double,_ quantity:Int){
         self.name = name
         self.price = price
         self.quantity = quantity
-        self.type = type
     }
     
     func printItemDetail(){
         print("Name of the item         \(name)")
-        print("Type of the item         \(type)")
         print("Price of the item        \(price)")
         print("Quantity of the item     \(quantity ?? 1)")
+        print("Tax on the item --       \(tax)")
+        print("Total cost       --      \(tax+price)")
+        print("Quantity * Price --      \((tax+price)*Double(quantity ?? 1))")
+        print("----------------------------------------------------")
     }
-    
 }
 
 // a protocol declaration for tax calculations
 protocol TaxCaculations{
     func calculateTax()->(Double)
-    func printTax()
+    func populateTax()
 }
 
 
@@ -35,15 +36,14 @@ protocol TaxCaculations{
 
 // array decleration for storing the details of the items.
 
-var rawItemList = [RawItem]()
-var manufacturedItemList = [ManufacturedItem]()
-var importedItemList = [ImportedItem]()
+var itemList = [ItemDetails & TaxCaculations ]()
+
 
 
 func inputItems(){
     
     var price:Double?
-    var name:String?
+    var name:String = ""
     var type:String?
     var quantity:Int? = 1
     
@@ -72,15 +72,14 @@ func inputItems(){
         
         // considering the input of name differently because it can have more than one word.
         var indexOfName = 1
-        if(inputParts[0] != Constants.commandName){ // first command must be name
+        if(inputParts.count > 0 && inputParts[0] != Constants.commandName){ // first command must be name
             print("wrong input format")
         }
         else{
-            name=""
             
             // using while loop to extract name.
             while( indexOfName < inputParts.endIndex && !isItCommand(inputString: inputParts[indexOfName])){ // continue looping till we don't hit another command.
-                name! += inputParts[indexOfName] + " ";
+                name += inputParts[indexOfName] + " ";
                 indexOfName+=1;
             }
             
@@ -106,7 +105,7 @@ func inputItems(){
             
         }
         // checking if all the inputs are valid.
-        if(name==nil){
+        if(name==""){
             print("Name not Entered")
         }
         else if(type == nil){
@@ -118,21 +117,21 @@ func inputItems(){
         else{
             // classifying objects on the basis of their type and appending into an array of their type (list)
             if(type == Constants.importedItem){
-                if let tempName = name, let tempPrice = price , let tempType = type{
-                    let importedItem = ImportedItem(tempName, tempPrice , quantity ?? 1, tempType)
-                    importedItemList.append(importedItem)
+                if let tempPrice = price {
+                    let importedItem = ImportedItem(name, tempPrice , quantity ?? 1)
+                    itemList.append(importedItem)
                 }
             }
             else if(type == Constants.rawItem){
-                if let tempName = name, let tempPrice = price , let tempType = type{
-                    let rawItem = ImportedItem(tempName, tempPrice , quantity ?? 1, tempType)
-                    importedItemList.append(rawItem)
+                if let tempPrice = price {
+                    let rawItem = ImportedItem(name, tempPrice , quantity ?? 1)
+                    itemList.append(rawItem)
                 }
             }
             else if(type == Constants.manufacturedItem){
-                if let tempName = name, let tempPrice = price , let tempType = type{
-                    let manufacturedItem = ImportedItem(tempName, tempPrice , quantity ?? 1, tempType)
-                    importedItemList.append(manufacturedItem)
+                if let tempPrice = price {
+                    let manufacturedItem = ImportedItem(name, tempPrice , quantity ?? 1)
+                    itemList.append(manufacturedItem)
                 }
             }
         }
@@ -164,19 +163,10 @@ func driver(){
     
     // Finally Printing the information about each item
     
-    for elements in rawItemList{
+    for elements in itemList{
+        elements.populateTax()
         elements.printItemDetail()
-        elements.printTax()
     }
-    for elements in manufacturedItemList{
-        elements.printItemDetail()
-        elements.printTax()
-    }
-    for elements in importedItemList{
-        elements.printItemDetail()
-        elements.printTax()
-    }
-    
     
 }
 
