@@ -9,11 +9,7 @@ import Foundation
 
 
 func nameValidator(name : String?) ->Bool{
-    if(name == nil){
-        print("wrong name entered")
-        return false
-    }
-    if(name!.isEmpty == true){
+    if(name == nil || name!.isEmpty == true){
         print("wrong name entered")
         return false
     }
@@ -58,8 +54,13 @@ func isInt(value:String?) -> Bool{
         print("Wrong value Entered")
         return false
     }
-    if Int(value!) != nil {
-        return true
+    if let tempValue = value{
+        if Int(tempValue) != nil {
+            return true
+        }
+        else{
+            return false
+        }
     }
     else{
         print("Wrong value entered")
