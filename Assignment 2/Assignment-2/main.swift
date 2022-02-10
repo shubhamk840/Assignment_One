@@ -18,7 +18,7 @@ protocol Operations{
 
 
 let validator = Validator()
-let helper = Helper()
+let query = Queries()
 
 func driver(){
     var flag = 1
@@ -30,11 +30,11 @@ func driver(){
         let choice = readLine()
         switch choice{
         case "1" :
-            if let currentUser = helper.addUser(){ // this returns an object that contains all the user data.
+            if let currentUser = query.addUser(){ // this returns an object that contains all the user data.
                 dictionaryOfUsers[currentUser.rollNumber] = currentUser
             }
         case "2" :
-            helper.sortAndDisplay()
+            query.sortAndDisplay()
         case "3" :
             print("Enter the roll number you wish to delete")
             var temp:String?
@@ -45,7 +45,7 @@ func driver(){
                 rollNumber = Int(temp!)
             }while(!validator.isInt(value: temp))
             if let tempRollNumber = rollNumber{
-                helper.deleteUser(rollNumber: tempRollNumber)
+                query.deleteUser(rollNumber: tempRollNumber)
             }
         case "4" :
             flag=0;

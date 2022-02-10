@@ -50,7 +50,7 @@ class Validator{
         if(array.count < 4){
             return false
         }
-        else if( array.allSatisfy({$0 == "A" || $0 == "B" || $0 == "C" || $0 == "D" || $0 == "E" || $0 == "F"})){
+        else if( array.allSatisfy({$0 == Constants.subjectA || $0 == Constants.subjectB || $0 == Constants.subjectC || $0 == Constants.subjectD || $0 == Constants.subjectE || $0 == Constants.subjectF})){
             return true
         }
         else{
