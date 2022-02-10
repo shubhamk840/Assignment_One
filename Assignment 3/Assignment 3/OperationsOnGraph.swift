@@ -8,11 +8,18 @@
 import Foundation
 
 // this class conforms to the protocol.
-class Operations: HelperFunctions{
+class Operations: Queries{
 
+    func nodeExists(id : Int)->(Bool){
+        if parentToChild[id] == nil{
+            return false
+        }
+        return true
+    }
    
     
 func addNode(id : Int){
+   
     var nodeName:String?
     var addInfo:String?
     print("Enter the name of the node")
@@ -57,6 +64,16 @@ func checkCycle(id:Int)-> (Bool){
 
 // adds a dependency , after checking whether additition of that edge creates any cycle
 func addDependency(parentId : Int , childId : Int){
+    
+    if(!nodeExists(id: parentId)){
+        print("Parent Node Does Not Exist")
+        return
+    }
+    else if(!nodeExists(id: childId)){
+        print("Child Id Does Not Exist")
+        return
+    }
+    
     parentToChild[parentId]?.insert(childId)
     if(checkCycle(id: parentId)==true){
         print("This dependecy can not be added because it creates a cycle")
@@ -69,6 +86,12 @@ func addDependency(parentId : Int , childId : Int){
 
 // Peforms dfs and prints all the descendants of the node
 func printDescendants(node: Int){
+    
+    if(!nodeExists(id: node)){
+        print("Node Does Not Exist")
+        return
+    }
+    
     printNodeInfo(node: node)
     for elements in parentToChild[node] ?? []{
         printDescendants(node: elements)
@@ -77,6 +100,12 @@ func printDescendants(node: Int){
 
 // Peform dfs and prints all the ancestors of the node
 func printAncestors(node :Int){
+    
+    if(!nodeExists(id: node)){
+        print("Node Does Not Exist")
+        return
+    }
+    
     printNodeInfo(node: node)
     for elements in childToParent[node] ?? []{
         printAncestors(node: elements)
@@ -85,6 +114,12 @@ func printAncestors(node :Int){
 
 // just prints the immediate children of the node by printing the adjacency list
 func printImmediateChildren(node: Int){
+    
+    if(!nodeExists(id: node)){
+        print("Node Does Not Exist")
+        return
+    }
+    
     print("Node Id of immediate children")
     if(parentToChild[node]?.isEmpty==true){
         print("No children present")
@@ -98,6 +133,11 @@ func printImmediateChildren(node: Int){
 
 // just prints the immediate parent of the node by printing the adjacency list
 func printImmediateParents(node : Int){
+    if(!nodeExists(id: node)){
+        print("Node Does Not Exist")
+        return
+    }
+    
     print("Node Id of immediate Parents")
     if(childToParent[node]?.isEmpty==true){
         print("No parent present")
@@ -109,6 +149,16 @@ func printImmediateParents(node : Int){
 
 // deletes dependencies
 func deleteDepedencies(parentId : Int, childId : Int){
+    
+    if(!nodeExists(id: parentId)){
+        print("Parent Node Does Not Exist")
+        return
+    }
+    else if(!nodeExists(id: childId)){
+        print("Child Id Does Not Exist")
+        return
+    }
+    
     if(parentToChild[parentId]?.contains(childId)==false){
         print("Dependency not present")
     }
@@ -120,6 +170,10 @@ func deleteDepedencies(parentId : Int, childId : Int){
 
 // deletes the node
 func deleteNode(node : Int){
+    if(!nodeExists(id: node)){
+        print("Node Does Not Exist")
+        return
+    }
     
     // go to every parent and break the dependecy between every parent and this node
     for elements in childToParent[node] ?? []{

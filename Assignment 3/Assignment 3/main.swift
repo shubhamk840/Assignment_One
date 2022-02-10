@@ -22,7 +22,7 @@ var childToParent = [Int : Set<Int>]() // [ node -> (list of all it's parent)]
 var idtoNode = [Int : Node]()    //[Node id -> Oject of Node class]
 
 
-protocol HelperFunctions{
+protocol Queries{
     func addNode(id:Int)
     func printNodeInfo(node:Int)
     func addDependency(parentId: Int, childId:Int)
@@ -35,9 +35,16 @@ protocol HelperFunctions{
 }
 // adds a node with no dependency
 
+// using singleton class
 
+class GraphManager{
+    static let graph = Operations()
+    private init(){
+        
+    }
+}
 
-let graph = Operations()
+//let graph = Operations()
 
 func driver(){
     var flag = 1
@@ -55,7 +62,7 @@ func driver(){
         if let choice = readLine(){
             switch(choice){
             case "1":
-                graph.addNode(id: counter)
+                GraphManager.graph.addNode(id: counter)
                 print("Node has been added with unique id \(counter)")
                 counter+=1
             case "2":
@@ -65,35 +72,35 @@ func driver(){
                 let childNodeId = readLine()
                 if let parentNodeId = parentNodeId , let childNodeId = childNodeId{
                     if let tempParent = Int(parentNodeId), let tempChild = Int(childNodeId){
-                        graph.addDependency(parentId: tempParent, childId: tempChild)
+                        GraphManager.graph.addDependency(parentId: tempParent, childId: tempChild)
                     }
                 }
             case "3":
                 print("Enter the Id of the Node")
                 if let temp = readLine(){
                     if let id = Int(temp){
-                        graph.printImmediateParents(node: id)
+                        GraphManager.graph.printImmediateParents(node: id)
                     }
                 }
             case "4":
                 print("Enter the Id of the Node")
                 if let temp = readLine(){
                     if let id = Int(temp){
-                        graph.printImmediateChildren(node: id)
+                        GraphManager.graph.printImmediateChildren(node: id)
                     }
                 }
             case "5":
                 print("Enter the Id of the node")
                 if let temp = readLine(){
                     if let id = Int(temp){
-                        graph.printAncestors(node: id)
+                        GraphManager.graph.printAncestors(node: id)
                     }
                 }
             case "6":
                 print("Enter the Id of the node")
                 if let temp = readLine(){
                     if let id = Int(temp){
-                        graph.printDescendants(node: id)
+                        GraphManager.graph.printDescendants(node: id)
                     }
                 }
             case "7":
@@ -103,14 +110,14 @@ func driver(){
                 let childNodeId = readLine()
                 if let parentNodeId = parentNodeId , let childNodeId = childNodeId{
                     if let tempParent = Int(parentNodeId), let tempChild = Int(childNodeId){
-                        graph.deleteDepedencies(parentId: tempParent, childId: tempChild)
+                        GraphManager.graph.deleteDepedencies(parentId: tempParent, childId: tempChild)
                     }
                 }
             case "8":
                 print("Enter the Id of the node")
                 if let temp = readLine(){
                     if let id = Int(temp){
-                        graph.deleteNode(node: id)
+                        GraphManager.graph.deleteNode(node: id)
                     }
                 }
             case "9":
