@@ -10,6 +10,15 @@ import Foundation
 // this class conforms to the protocol.
 class Operations: Queries{
 
+    
+    // creating an singleton class since object creation is not required.
+    
+    static let graph = Operations()
+    
+    private init(){
+        
+    }
+    
     func nodeExists(id : Int)->(Bool){
         if parentToChild[id] == nil{
             return false
@@ -183,5 +192,7 @@ func deleteNode(node : Int){
     childToParent[node] = []
     
 }
+    
+    
     
 }
